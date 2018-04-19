@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block principal %}
+
+<article class="panel panel-success card" style="max-width: 500px; margin: 20px auto;">
+  <header class="jumbotron text-center mb-4">
+    <div class="panel-heading"><h1 class="h1 mb-3 font-weight-normal">Seu peso em Foco</h1></div>
+  </header>
+  <main>
+    <p class="text-center">|<b>{{pessoa.nome}}</b>|
+    <p>Meta: {{ meta.peso }} Kg Data:{{ meta.data }}
+    <form action="{% url 'incluipeso' %}" class="form" method="post">
+      {% csrf_token %}
+      <div class="form-label-group text-center mb-4">
+        <input type="hidden" value='{{ pessoa.id }}' id='pessoa_id' name='pessoa_id'>
+        <label for="peso">Seu peso hoje</label>
+        <input id="peso" name = "peso" value="" placeholder="Peso Kg" class="form-control" required autofocus>
+        <input value="submit" type="submit">
+      </div>
+    </form>
+    <hr>
+    <table>
+      <thead>
+        <tr>
+          <th>Peso</th><th>Data</th><th></th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for peso in pesos %}
+        <tr>
+          <td>{{peso.peso}}</td><td>{{peso.data}}</td><td><a href="#"></a></td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </main>
+</article>
+{% endblock %}
