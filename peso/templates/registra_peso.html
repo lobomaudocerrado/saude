@@ -7,6 +7,8 @@
     <div class="panel-heading"><h1 class="h1 mb-3 font-weight-normal">Seu peso em Foco</h1></div>
   </header>
   <main>
+    <div>
+      {% if mensagem %} <h1>{{ mensagem }}</h1> {% endif %}
     <p class="text-center">|<b>{{pessoa.nome}}</b>|
     <p>Meta: {{ meta.peso }} Kg Data:{{ meta.data }}
     <form action="{% url 'incluipeso' %}" class="form" method="post">
@@ -15,7 +17,6 @@
         <input type="hidden" value='{{ pessoa.id }}' id='pessoa_id' name='pessoa_id'>
         <label for="peso">Seu peso hoje</label>
         <input id="peso" name = "peso" value="" placeholder="Peso Kg" class="form-control" required autofocus>
-        <input value="submit" type="submit">
       </div>
     </form>
     <hr>

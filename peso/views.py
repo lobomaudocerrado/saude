@@ -9,7 +9,7 @@ def index(request):
     return HttpResponse('Bem vindo')
 
 
-def peso(request, pessoa_login):
+def peso(request, pessoa_login, mensagem=''):
     #pessoa = Pessoa()
     #pessoa.nome = pessoa_login + ': não cadastrado.'
     #meta = Meta()
@@ -19,12 +19,16 @@ def peso(request, pessoa_login):
     pessoa_login = 'lobomaudocerrado@gmail.com'
     try:
         pessoa = Pessoa.objects.filter(login=pessoa_login)[0]
-        meta = Meta.objects.filter(pessoa = pessoa)[0]
+        #meta = Meta.objects.filter(pessoa = pessoa)
+
         pesos = Peso.objects.filter(pessoa=pessoa)
     except:
         pass
-
+    meta = Meta.metaAtual(pessoa)
     contexto = {'pessoa':pessoa, 'meta':meta, 'pesos':pesos}
+
+    if mensagem:
+        contexto['mensagem'] = mensagem
 
 
     return render(request, 'registra_peso.html', contexto)
@@ -41,7 +45,8 @@ def novoPeso(request):
         peso.pessoa = pessoa
         peso.peso = request.POST.get('peso')
         peso.save()
+        mensagem = 'Peso registrado com sucesso.'
     except:
-        return HttpResponse('Erro ao salvar o peso')
+        mensagem = 'Erro ao registrar peso'
 
-    return HttpResponseRedirect(reverse('peso',args=(pessoa.login,)))
+    return HttpResponseRedirect(reverse('peso',args=(pessoa.login, )), mensagem)
