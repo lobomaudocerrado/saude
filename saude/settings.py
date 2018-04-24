@@ -12,8 +12,13 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 
 import os
 
+# Inserido para o heroku
+import dj_database_url
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+# Inserido para o heroku
 PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
 
 
@@ -122,14 +127,14 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-#Configurações para o HEROKU
+# Configurações para o HEROKU
 
-#Update database configuration with $DATABASE_URL.
+# Update database configuration with $DATABASE_URLself.
 db_from_env = dj_database_url.config(conn_max_age=500)
 DATABASES['default'].update(db_from_env)
 
 # Allow all hosts headers
-ALLOWED_HOSTS = [*]
+ALLOWED_HOSTS = ['*']
 
 # Honor the 'X-Forwarded-proto' header for request.is_secure()
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
