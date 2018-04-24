@@ -3,6 +3,7 @@ import datetime
 
 class Pessoa(models.Model):
     nome    = models.CharField("Nome",           max_length=100)
+    slug    = models.CharField("slug",           max_length=100)
     apelido = models.CharField("Apelido",        max_length=20)
     login   = models.CharField("Usuário/e-mail", max_length=300)
     senha   = models.CharField("Senha",          max_length=12)
@@ -73,7 +74,7 @@ class Peso(models.Model):
 
     pessoa = models.ForeignKey('registro.Pessoa', verbose_name="Pessoa", on_delete=models.CASCADE)
 
-    descricao = models.TextField("Descrição", blank=True)
+    descricao = models.TextField("Observações", blank=True)
 
 
     class Meta:
