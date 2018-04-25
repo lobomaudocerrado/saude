@@ -10,7 +10,6 @@ model-mommy==1.5.1
 parso==0.1.1
 pexpect==4.4.0
 pickleshare==0.7.4
-pkg-resources==0.0.0
 prompt-toolkit==1.0.15
 psycopg2==2.7.4
 ptyprocess==0.5.2
