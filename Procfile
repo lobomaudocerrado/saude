@@ -1,1 +1,1 @@
-web: gunicorn saude.wsgi --log-file - 
+web: gunicorn saude.py --log-file - 
