@@ -1,1 +1,1 @@
-web: gunicorn saude.py --log-file - 
+web: gunicorn saude:application --log-file - 
