@@ -15,6 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from django.conf.urls import url
 
 from peso import views
 
@@ -23,5 +24,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('peso/', views.index, name='peso'),
     path('incluipeso/', views.novoPeso, name='incluipeso'),
-    path('peso/<pessoa_login>/', views.peso, name='peso'),
+    url(r'^peso/(?P<login>[\w_.@-]+)/$', views.peso, name='peso'),
 ]

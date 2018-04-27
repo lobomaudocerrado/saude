@@ -9,16 +9,16 @@ def index(request):
     return HttpResponse('Bem vindo')
 
 
-def peso(request, pessoa_login, mensagem=''):
+def peso(request, login):
     #pessoa = Pessoa()
     #pessoa.nome = pessoa_login + ': não cadastrado.'
     #meta = Meta()
     #meta.peso = 0
     #meta.data = datetime.datetime.now()
     #pesos = []
-    pessoa_login = 'lobomaudocerrado@gmail.com'
+    #pessoa_login = 'lobomaudocerrado@gmail.com'
     try:
-        pessoa = Pessoa.objects.filter(login=pessoa_login)[0]
+        pessoa = Pessoa.objects.get(login=login)
         #meta = Meta.objects.filter(pessoa = pessoa)
 
         pesos = Peso.objects.filter(pessoa=pessoa)
@@ -26,9 +26,6 @@ def peso(request, pessoa_login, mensagem=''):
         pass
     meta = Meta.metaAtual(pessoa)
     contexto = {'pessoa':pessoa, 'meta':meta, 'pesos':pesos}
-
-    if mensagem:
-        contexto['mensagem'] = mensagem
 
 
     return render(request, 'registra_peso.html', contexto)
@@ -49,4 +46,4 @@ def novoPeso(request):
     except:
         mensagem = 'Erro ao registrar peso'
 
-    return HttpResponseRedirect(reverse('peso',args=(pessoa.login, )), mensagem)
+    return HttpResponseRedirect(reverse('peso',kwargs={'login':pessoa.login, }), mensagem)
