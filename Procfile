@@ -1,1 +1,1 @@
-web: gunicorn saude:application --log-file - 
+web: gunicorn saude.wsgi 
