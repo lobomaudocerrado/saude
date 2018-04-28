@@ -69,7 +69,7 @@ class Meta(models.Model):
         return str(self.peso)
 
 class Peso(models.Model):
-    data = models.DateTimeField("Data da Pesagem", auto_now_add=True)
+    data = models.DateTimeField("Data da Pesagem", default=datetime.datetime.today())
     peso = models.DecimalField("Peso", decimal_places=1, max_digits=5)
 
     pessoa = models.ForeignKey('registro.Pessoa', verbose_name="Pessoa", on_delete=models.CASCADE)
