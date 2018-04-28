@@ -10,22 +10,28 @@ def index(request):
 
 
 def peso(request, login):
-    #pessoa = Pessoa()
-    #pessoa.nome = pessoa_login + ': não cadastrado.'
-    #meta = Meta()
-    #meta.peso = 0
-    #meta.data = datetime.datetime.now()
-    #pesos = []
-    #pessoa_login = 'lobomaudocerrado@gmail.com'
+    """
+    Constrói a página de registro do peso atual de uma pesoa.
+    Utiliza como parâmetro o login -- será alterado para slug.
+    login é usado para achar pessoa.
+    pessoa é usada para buscar meta atual e histórico de pesos.
+    pessoa, pesos e métrica atual são passadas em contexto.
+
+    """
+    
+    ultimo = ""
     try:
         pessoa = Pessoa.objects.get(login=login)
         #meta = Meta.objects.filter(pessoa = pessoa)
 
         pesos = Peso.objects.filter(pessoa=pessoa)
+
+        ultimo = pesos[0]
     except:
         pass
+
     meta = Meta.metaAtual(pessoa)
-    contexto = {'pessoa':pessoa, 'meta':meta, 'pesos':pesos}
+    contexto = {'pessoa':pessoa, 'meta':meta, 'pesos':pesos, 'ultimo':ultimo}
 
 
     return render(request, 'registra_peso.html', contexto)
