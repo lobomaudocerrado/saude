@@ -11,13 +11,13 @@ def index(request):
     slug = request.POST.get('slug', None)
     try:
         pessoa = Pessoa.objects.get(slug=slug)
-        return HttpResponseRedirect(reverse('peso',kwargs={'login':pessoa.login, }))
+        return HttpResponseRedirect(reverse('peso',kwargs={'slug':pessoa.slug, }))
     except ObjectDoesNotExist:
         return HttpResponse(slug+' não está cadastrado.')
 
 
 
-def peso(request, login):
+def peso(request, slug):
     """
     Constrói a página de registro do peso atual de uma pesoa.
     Utiliza como parâmetro o login -- será alterado para slug.
@@ -29,14 +29,15 @@ def peso(request, login):
 
     ultimo = ""
     try:
-        pessoa = Pessoa.objects.get(login=login)
-        #meta = Meta.objects.filter(pessoa = pessoa)
+        pessoa = Pessoa.objects.get(slug=slug)
+    except ObjectDoesNotExist:
+        return HttpResponse('Pessoa não cadstrada.')
 
-        pesos = Peso.objects.filter(pessoa=pessoa)
-
+    pesos = Peso.objects.filter(pessoa=pessoa)
+    if pesos:
         ultimo = pesos[0]
-    except:
-        pass
+    else:
+        ultimo = ""
 
     meta = Meta.metaAtual(pessoa)
     contexto = {'pessoa':pessoa, 'meta':meta, 'pesos':pesos, 'ultimo':ultimo}
@@ -56,8 +57,7 @@ def novoPeso(request):
         peso.pessoa = pessoa
         peso.peso = request.POST.get('peso')
         peso.save()
-        mensagem = 'Peso registrado com sucesso.'
     except:
-        mensagem = 'Erro ao registrar peso'
+        return HttpResponse('Problemas tentando salvar o peso, tente novamente mais tarde.')
 
-    return HttpResponseRedirect(reverse('peso',kwargs={'login':pessoa.login, }), mensagem)
+    return HttpResponseRedirect(reverse('peso',kwargs={'slug':pessoa.slug, }))

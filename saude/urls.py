@@ -25,5 +25,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('peso/', views.index, name='peso'),
     path('incluipeso/', views.novoPeso, name='incluipeso'),
-    url(r'^peso/(?P<login>[\w_.@-]+)/$', views.peso, name='peso'),
+    url(r'^peso/(?P<slug>[\w_-]+)/$', views.peso, name='peso'),
 ]

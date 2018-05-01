@@ -17,8 +17,8 @@
     <main class="container-fluid">
       <form action="{% url 'peso' %}" method="post">
         {% csrf_token %}
-        <label for="slug">Registre seu peso hoje</label>
-        <input name="slug">
+        <label for="slug">Identifique-se: </label>
+        <input name="slug" placeholder="slug" class="form-control" required autofocus>
       </form>
     </main>
     {% endblock %}
