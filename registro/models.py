@@ -2,10 +2,10 @@ from django.db import models
 import datetime
 
 class Pessoa(models.Model):
-    nome    = models.CharField("Nome",           max_length=100)
-    slug    = models.CharField("slug",           max_length=100)
+    nome    = models.CharField("Nome",           max_length=100, unique=True)
+    slug    = models.CharField("slug",           max_length=100, unique=True)
     apelido = models.CharField("Apelido",        max_length=20)
-    login   = models.CharField("Usuário/e-mail", max_length=300)
+    login   = models.CharField("Usuário/e-mail", max_length=300, unique=True)
     senha   = models.CharField("Senha",          max_length=12)
 
     class Meta:

@@ -18,9 +18,10 @@ from django.urls import path
 from django.conf.urls import url
 
 from peso import views
+from base.views import index
 
 urlpatterns = [
-    path('', views.index, name='index'),
+    path('', index, name='index'),
     path('admin/', admin.site.urls),
     path('peso/', views.index, name='peso'),
     path('incluipeso/', views.novoPeso, name='incluipeso'),

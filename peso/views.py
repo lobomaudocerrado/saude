@@ -2,11 +2,19 @@ from django.shortcuts import render
 from registro.models import Pessoa, Meta, Peso
 from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import reverse
+from django.core.exceptions import ObjectDoesNotExist
 
 import datetime
 
 def index(request):
-    return HttpResponse('Bem vindo')
+    #return HttpResponse('Bem vindo')
+    slug = request.POST.get('slug', None)
+    try:
+        pessoa = Pessoa.objects.get(slug=slug)
+        return HttpResponseRedirect(reverse('peso',kwargs={'login':pessoa.login, }))
+    except ObjectDoesNotExist:
+        return HttpResponse(slug+' não está cadastrado.')
+
 
 
 def peso(request, login):
@@ -18,7 +26,7 @@ def peso(request, login):
     pessoa, pesos e métrica atual são passadas em contexto.
 
     """
-    
+
     ultimo = ""
     try:
         pessoa = Pessoa.objects.get(login=login)
