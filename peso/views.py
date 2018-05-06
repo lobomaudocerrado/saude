@@ -44,7 +44,11 @@ def peso(request, slug):
 
 
     return render(request, 'registra_peso.html', contexto)
+"""
+novoPeso(request)
 
+insere o peso, id_pessoa enviados pelo metodo request.POST na classe Peso.
+"""
 def novoPeso(request):
 
     try:
